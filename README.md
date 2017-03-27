@@ -18,7 +18,7 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [image1]: ./hist_class.jpg "Class distribution"
-[image1]: ./hist_class.jpg "Visualization"
+[image1]: ./hist_insight.jpg "Visualization"
 [image2]: ./grayscale.png "Grayscaling"
 [image3]: ./class_aug.jpg "Augmentation Noise"
 [image4]: traffic_internet/3.jpg "Traffic Sign 1"
@@ -93,13 +93,13 @@ My final model consisted of the following layers:
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
 | Input         		| 32x32x1 Grayscale image  
-| Convolution 5x5     	| 1x1 stride, valid padding, outputs 32x32x32 	|
+| Convolution 5x5     	| 1x1 stride, same padding, outputs 32x32x32 	|
 | RELU                  |
 | Max Pooling           | 2x2 stride, outputs 16x16x32
-| Convolution 5x5     	| 1x1 stride, valid padding, outputs 16x16x64	|
+| Convolution 5x5     	| 1x1 stride, same padding, outputs 16x16x64	|
 | RELU					|												|
 | Max pooling	      	| 2x2 stride,  outputs 8x8x64				    | 
-| Convolution 5x5	    | 1x1 stride, valid padding, outputs 8x8x128
+| Convolution 5x5	    | 1x1 stride, same padding, outputs 8x8x128
 | RELU					|												|
 | Max pooling	      	| 2x2 stride,  outputs 4x4x128		     									|
 | Fully connected		| outputs 2048
@@ -111,10 +111,8 @@ My final model consisted of the following layers:
 | Fully connected		| outputs 512 
 | RELU
 | DROPOUT	  			|
-| Softmax				|        									|
-|						|												|
-|						|												|
- 
+| Softmax				| outputs 43      									|
+
 
 
 ####4. Network Training
@@ -148,6 +146,12 @@ To train the model, I used the LeNet architecture and tuned the parameters as fo
     * Test accuracy = 0.943
     but on the new images I had an accuracy only of 20%
 
+* add another convolution layer:
+
+    * Validation Loss = 0.259
+    * Validation Accuracy = 0.968
+    * Test accuracy = 0.944
+
 * with data augmentation with data size 51999 the test accuracy 
 
 
@@ -161,25 +165,18 @@ To train the model, I used the LeNet architecture and tuned the parameters as fo
 The code for calculating the accuracy of the model is located in the ninth cell of the Ipython notebook.
 
 My final model results were:
-    * Validation Loss = 0.259
-    * Validation Accuracy = 0.968
-    * Test accuracy = 0.94
+
+   * Validation Loss = 0.259
+   * Validation Accuracy = 0.968
+   * Test accuracy = 0.94
     
 
-I tried the LeNet Architecture with two convolution layers and two fully connected layer as it performed well on the MNIST dataset.
-However the traffic sign have a more complex structure than handwriting. The LeNet structure is to simple to learn all the features and test accuracy 
-higher than 94% was not possible.
+I tried the LeNet Architecture with two convolution layers and two fully connected layer. This type of architecture performs well on the MNIST dataset.
+A test accuracy of 94% was achieved with LeNet after image preprocessing the images tunning the learning rate and number of epochs.
 
 
-I then decided to improve the network by adding another convolution layer to be able to capture more features. The following results were achiaved by training on the initial tra. 
-
-Validation Loss = 0.259
-Validation Accuracy = 0.968
-Test accuracy = 0.944
-
-To further improve the networks performance, I started training with augmented data. 
-To adress the problem of overfitting as so improve the test accuracy, I added dropouts with a probability of 0.9
-in the last convolutional layer and to the fully connected layers when training. The results were
+To improve the test accuracy I started training with augmented data. I further added dropouts with a probability of 0.9
+in the last convolutional layer and to the fully connected layers when training to further generalize. 
 
 
 ###Test a Model on New Images
