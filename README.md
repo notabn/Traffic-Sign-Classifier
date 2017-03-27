@@ -121,20 +121,20 @@ The code for training the model is located in the tenth cell of the ipython note
 
 To train the model, I used the LeNet architecture and tuned the parameters as follows:
 
-*  I tuned the learning rate with 0.008 and 0.005 learning rate the validation accuracy was no higher that 93%, and concluded that a smaller learning rate is needed 
-*  decrease learning rate = 0.001  and simultaneously increase number of epoch to 40 the validation accuracy increased to 96% as below
+*  varied the learning rate with 0.008 and 0.005, the validation accuracy was no higher that 93%
+*  decreased the learning rate to 0.001 and simultaneously increase the number of epoch to 40, the validation accuracy increased to 96% as below
 
     * Validation Loss = 0.201
     * Validation Accuracy = 0.965    
     * Test accuracy = 0.936
     
-* keep learning rate at 0.001  and increase number of epoch to 50 ; after epoch 45 the loss was oscilating an not decreasing anymore
+* keep learning rate at 0.001  and increase number of epoch to 50 ; after epoch 45 the loss was oscillating around 96% 
 
     * Validation Loss = 0.296
     * Validation Accuracy = 0.961
     * Test accuracy = 0.94
 
-* with learning rate at 0.001  and 70 epoch the model is overfitting
+* with learning rate at 0.001  and 70 epoch the model is performs as follows
 
     * Validation Loss = 0.501
     * Validation Accuracy = 0.955
