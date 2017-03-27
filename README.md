@@ -20,7 +20,7 @@ The goals / steps of this project are the following:
 [image1]: ./hist_class.jpg "Class distribution"
 [image1]: ./hist_class.jpg "Visualization"
 [image2]: ./grayscale.png "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
+[image3]: ./class_aug.jpg "Augmentation Noise"
 [image4]: traffic_internet/3.jpg "Traffic Sign 1"
 [image5]: ./traffic_internet/5.png "Traffic Sign 2"
 [image6]: traffic_internet/17.png "Traffic Sign 3"
@@ -70,19 +70,18 @@ As a last step, to improve contrast images I performed a histogram equalisation.
 
 
 ####2. Data
-Describe how, and identify where in your code, you set up training, validation and testing data. How much data was in each set? Explain what techniques were used to split the data into these sets. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, identify where in your code, and provide example images of the additional data)
 
-To cross validate my model, I randomly split the training data into a training set and validation set. I did this by ...
 
-My final training set had X number of images. My validation set and test set had Y and Z number of images.
+My final training set had 51999 number of images. My validation set and test set had 4410 and 12630 number of images.
 
-The sixth code cell of the IPython notebook contains the code for augmenting the data set. I decided to generate additional data because ... To add more data to the the data set, I used the following techniques because ... 
+The forth code cell of the IPython notebook contains the code for augmenting the data set taken from . I decided to generate additional data to improve the network capabilities to generalize. 
+To add more data to the the data set, I rotated, translated and sheared the image.  
 
-Here is an example of an original image and an augmented image:
+The difference between the original data set and the augmented data set is the following :
 
 ![alt text][image3]
 
-The difference between the original data set and the augmented data set is the following ... 
+
 
 
 ####3. Network Architecture
@@ -93,17 +92,25 @@ My final model consisted of the following layers:
 
 | Layer         		|     Description	        					| 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x1 Grayscale image   							| 
-| Convolution 5x5     	| 1x1 stride, valid padding, outputs 28x28x6 	|
+| Input         		| 32x32x1 Grayscale image  
+| Convolution 5x5     	| 1x1 stride, valid padding, outputs 32x32x32 	|
+| RELU                  |
+| Max Pooling           | 2x2 stride, outputs 16x16x32
+| Convolution 5x5     	| 1x1 stride, valid padding, outputs 16x16x64	|
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 14x14x6 				    | 
-| Convolution 5x5	    | 1x1 stride, valid padding, outputs 10x10x16
+| Max pooling	      	| 2x2 stride,  outputs 8x8x64				    | 
+| Convolution 5x5	    | 1x1 stride, valid padding, outputs 8x8x128
 | RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 5x5x16 		     									|
-| Fully connected		| outputs 84 
-| RELU					|	      
-| Fully connected		| outputs 34 
-| RELU					|	  									|
+| Max pooling	      	| 2x2 stride,  outputs 4x4x128		     									|
+| Fully connected		| outputs 2048
+| RELU					|	 
+| DROPOUT
+| Fully connected		| outputs 1024
+| RELU	
+| DROPOUT	      
+| Fully connected		| outputs 512 
+| RELU
+| DROPOUT	  			|
 | Softmax				|        									|
 |						|												|
 |						|												|
@@ -112,7 +119,7 @@ My final model consisted of the following layers:
 
 ####4. Network Training
 
-The code for training the model is located in the eigth cell of the ipython notebook. 
+The code for training the model is located in the tenth cell of the ipython notebook. 
 
 To train the model, I used the LeNet architecture and tuned the parameters as follows:
 
@@ -141,10 +148,10 @@ To train the model, I used the LeNet architecture and tuned the parameters as fo
     * Test accuracy = 0.943
     but on the new images I had an accuracy only of 20%
 
-* with data augmentation with data size 51999 the test accuracy dropped 2%, I suppose the number of epoch should incease with more data 
-    * Validation Loss = 0.386
-    * Validation Accuracy = 0.946
-    * test accuracy = 0.915
+* with data augmentation with data size 51999 the test accuracy 
+
+
+
 
 
 
@@ -164,21 +171,15 @@ However the traffic sign have a more complex structure than handwriting. The LeN
 higher than 94% was not possible.
 
 
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to over fitting or under fitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
- For larger datasets such as Imagenet, the recent trend has been to increase the number of layers [12] and layer size [21, 14], while using dropout [7] to address the problem of overfitting
-Going Deeper with Convolutions , http://www.cv-foundation.org/openaccess/content_cvpr_2015/papers/Szegedy_Going_Deeper_With_2015_CVPR_paper.pdf
+I then decided to improve the network by adding another convolution layer to be able to capture more features. The following results were achiaved by training on the initial tra. 
 
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+Validation Loss = 0.259
+Validation Accuracy = 0.968
+Test accuracy = 0.944
 
-If a well known architecture was chosen:
-* What architecture was chosen?
-* Why did you believe it would be relevant to the traffic sign application?
-* How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
-
- 
-
- 
+To further improve the networks performance, I started training with augmented data. 
+To adress the problem of overfitting as so improve the test accuracy, I added dropouts with a probability of 0.9
+in the last convolutional layer and to the fully connected layers when training. The results were
 
 
 ###Test a Model on New Images
@@ -189,8 +190,6 @@ Here are five German traffic signs that I found on the web:
 ![alt text][image7] ![alt text][image8]
 
 The first image might be difficult to classify because ...
-
-####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. Identify where in your code predictions were made. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
 The code for making predictions on my final model is located in the tenth cell of the Ipython notebook.
 
@@ -204,7 +203,7 @@ Here are the results of the prediction:
     Speed limit (80km/h)  Traffic signals
 
 
-The model was able to correctly guess 2 of the 5 traffic signs, which gives an accuracy of 40%. This doesn't compare to the accuracy on the test set of 93.4%
+The model was able to correctly guess 3 of the 5 traffic signs, which gives an accuracy of 60%. This doesn't compare to the accuracy on the test set of 93.4%
 
 ####3. Softmax probabilities
 
@@ -229,7 +228,7 @@ For the no entry and bumpy road signs the model is sure of the prediction  with 
           Bicycles crossing  3.876817e-08
                   Road work  1.776608e-10
             Traffic signals  1.099153e-10
-  Road narrows on the right  3.592186e-11
+        Road narrows on the right  3.592186e-11
   
   
   The model is not able to recognize the following sign for which it calculated the following top five soft max probabilities 
