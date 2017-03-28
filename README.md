@@ -21,11 +21,11 @@ The goals / steps of this project are the following:
 [image1]: ./hist_insight.jpg "Visualization"
 [image2]: ./grayscale.png "Grayscaling"
 [image3]: ./class_aug.jpg "Augmentation Noise"
-[image4]: traffic_internet/3.jpg "Traffic Sign 1"
-[image5]: ./traffic_internet/5.png "Traffic Sign 2"
-[image6]: traffic_internet/17.png "Traffic Sign 3"
-[image7]: ./traffic_internet/12.png "Traffic Sign 4"
-[image8]: ./traffic_internet/22.png "Traffic Sign 5"
+[image4]: img_traffic_resize/3resized.png "Traffic Sign 1"
+[image5]: img_traffic_resize/5resized.png    "Traffic Sign 2"
+[image6]: img_traffic_resize/17resized.png       "Traffic Sign 3"
+[image7]: img_traffic_resize/12resized.png "Traffic Sign 4"
+[image8]: img_traffic_resize/22resized.png "Traffic Sign 5"
 
 ## Rubric Points
 ###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
@@ -182,24 +182,35 @@ in the last convolutional layer and to the fully connected layers when training 
 
 Here are five German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![alt text][image4]       ![alt text][image5]    ![alt text][image6] 
+![alt text][image7]       ![alt text][image8]
 
-The first image might be difficult to classify because ...
+The speed limit (60km/h) sign might be difficult to classify because of its dark background, regarding that the images 
+in the training set have a white background. Also the speed limit (60km/h) sign  has a distribution of the color intensity 
+with a predominat peak for lower intensities in comparison to the other signs that present multiple peaks 
+as shown in the fifteens cell output.
+The priority road sign should be correctly classified despite of the shadow covering the right corner of the image. 
+The preprocessing seems to equalize the intensity in the sing as it can be seen in the output
+of the fourteens cell.  
+The orientation of the no entry sign should be classified properly by the network, as the jitter images in 
+the training set with augmented data presented a higher rotation and translation.  
+The classification of the bumpy road sign should be straight forward considering that the image is not jitter nor covered
+by anything.
+The code for making predictions on my final model is located in the sixteens cell of the Ipython notebook with 
+the following results :
 
-The code for making predictions on my final model is located in the tenth cell of the Ipython notebook.
-
-Here are the results of the prediction:
-
-                  Image       Prediction
-         Priority road       Ahead only
-              No entry         No entry
-            Bumpy road       Bumpy road
-    Speed limit (60km/h)      No vehicles
-    Speed limit (80km/h)  Traffic signals
+    
+ |            Image      |      Prediction
+ |:---------------------:|:--------------------:| 
+           Priority road         Priority road
+                No entry              No entry
+              Bumpy road            Bumpy road
+    Speed limit (60km/h)            Keep right
+    Speed limit (80km/h)  Speed limit (80km/h)
 
 
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares to the accuracy on the test set of 93.4%
+The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. 
+This compares to the accuracy on the test set of 93.4% given the lower number of the new figure chosen for the test.
 
 ####3. Softmax probabilities
 
@@ -209,9 +220,9 @@ For the no entry and bumpy road signs the model is sure of the prediction  with 
 
 * No Entry
     
- |                Prediction | Probability
- |:---------------------:|:---------------------------------------------:| 
-               No entry          1.0
+ |            Prediction | Probability
+ |:---------------------:|:------------:| 
+               No entry           1.0
     Speed limit (20km/h)          0.0
     Speed limit (30km/h)          0.0
     Speed limit (50km/h)          0.0
@@ -221,8 +232,8 @@ For the no entry and bumpy road signs the model is sure of the prediction  with 
 * Bumpy road
 
 
- |                Prediction | Probability
- |:---------------------:|:---------------------------------------------:| 
+ |                Prediction     | Probability
+ |:----------------------------:|:-----------------------:| 
                      Bumpy road  1.000000e+00
                 Traffic signals  1.009525e-15
     Dangerous curve to the left  1.787942e-17
@@ -234,24 +245,24 @@ For the no entry and bumpy road signs the model is sure of the prediction  with 
 
 * Priority road 
 
- |                             Prediction | Probability
- |:---------------------:|:---------------------------------------------:| 
-                            Priority road  1.000000e+00
-                    Roundabout mandatory  3.143647e-12
-                             No vehicles  1.202658e-12
-    Right-of-way at the next intersection  1.196022e-15
-                   Speed limit (80km/h)  1.823047e-16 
+ |                              Prediction | Probability
+ |:---------------------------------------:|:----------------:| 
+                            Priority road   1.000000e+00
+                     Roundabout mandatory   3.143647e-12
+                              No vehicles   1.202658e-12
+    Right-of-way at the next intersection   1.196022e-15
+                     Speed limit (80km/h)    1.823047e-16 
 
 
 * Speed limit (80km/h)
 
  |                Prediction | Probability
- |:---------------------:|:---------------------------------------------:| 
-    Speed limit (80km/h)  1.000000e+00
-    Speed limit (120km/h)  2.081876e-21
-    Speed limit (30km/h)  1.425458e-21
-    Speed limit (20km/h)  2.856462e-22
-    Speed limit (50km/h)  1.257534e-23
+ |:-------------------------:|:------------------:| 
+    Speed limit (80km/h)        1.000000e+00
+    Speed limit (120km/h)       2.081876e-21
+    Speed limit (30km/h)        1.425458e-21
+    Speed limit (20km/h)        2.856462e-22
+    Speed limit (50km/h)        1.257534e-23
 
                  
  The model is not able to recognize the following sign for which it calculated the following top five soft max probabilities 
