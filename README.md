@@ -152,7 +152,9 @@ To train the model, I used the LeNet architecture and tuned the parameters as fo
 
 * with data augmentation with data size 51999 the test accuracy 
 
-
+    * Validation Loss = 0.263
+    * Validation Accuracy = 0.964
+    * Test accuracy = 0.949
 
 
 
@@ -163,10 +165,9 @@ To train the model, I used the LeNet architecture and tuned the parameters as fo
 The code for calculating the accuracy of the model is located in the ninth cell of the Ipython notebook.
 
 My final model results were:
-
-   * Validation Loss = 0.259
-   * Validation Accuracy = 0.968
-   * Test accuracy = 0.94
+    * Validation Loss = 0.263
+    * Validation Accuracy = 0.964
+    * Test accuracy = 0.949
     
 
 I tried the LeNet Architecture with two convolution layers and two fully connected layer. This type of architecture performs well on the MNIST dataset.
@@ -174,7 +175,7 @@ A test accuracy of 94% was achieved with LeNet after image preprocessing the ima
 
 
 To improve the test accuracy I started training with augmented data. I further added dropouts with a probability of 0.9
-in the last convolutional layer and to the fully connected layers when training to further generalize. 
+in the last convolutional layer and to the fully connected layers when training to further generalize. It improved the test accuracy with 1%.
 
 
 ###Test a Model on New Images
@@ -198,7 +199,7 @@ Here are the results of the prediction:
     Speed limit (80km/h)  Traffic signals
 
 
-The model was able to correctly guess 3 of the 5 traffic signs, which gives an accuracy of 60%. This doesn't compare to the accuracy on the test set of 93.4%
+The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares to the accuracy on the test set of 93.4%
 
 ####3. Softmax probabilities
 
@@ -207,51 +208,61 @@ The code for making predictions on my final model is located in the 11th cell of
 For the no entry and bumpy road signs the model is sure of the prediction  with aprobability of 1%. The the top five probabilities
 
 * No Entry
-
-              Prediction   Probability
-                No entry  1.000000e+00
-    Roundabout mandatory  4.669926e-08
-        Turn right ahead  2.168699e-09
-           Priority road  7.213173e-10
-                    Stop  6.321932e-11
-                    
+    
+ |                Prediction | Probability
+ |:---------------------:|:---------------------------------------------:| 
+               No entry          1.0
+    Speed limit (20km/h)          0.0
+    Speed limit (30km/h)          0.0
+    Speed limit (50km/h)          0.0
+    Speed limit (60km/h)          0.0
+                        
 
 * Bumpy road
 
-                  Prediction   Probability
-                 Bumpy road  1.000000e+00
-          Bicycles crossing  3.876817e-08
-                  Road work  1.776608e-10
-            Traffic signals  1.099153e-10
-        Road narrows on the right  3.592186e-11
-  
-  
-  The model is not able to recognize the following sign for which it calculated the following top five soft max probabilities 
 
-  Priority sign
+ |                Prediction | Probability
+ |:---------------------:|:---------------------------------------------:| 
+                     Bumpy road  1.000000e+00
+                Traffic signals  1.009525e-15
+    Dangerous curve to the left  1.787942e-17
+                    No vehicles  2.511196e-19
+    Dangerous curve to the right  2.134238e-23
   
-              Prediction  Probability
-              Ahead only     0.490671
-    Speed limit (60km/h)     0.462833
-         General caution     0.022604
-             No vehicles     0.006507
-                   Yield     0.005151
+  
+ 
+
+* Priority road 
+
+ |                             Prediction | Probability
+ |:---------------------:|:---------------------------------------------:| 
+                            Priority road  1.000000e+00
+                    Roundabout mandatory  3.143647e-12
+                             No vehicles  1.202658e-12
+    Right-of-way at the next intersection  1.196022e-15
+                   Speed limit (80km/h)  1.823047e-16 
+
+
+* Speed limit (80km/h)
+
+ |                Prediction | Probability
+ |:---------------------:|:---------------------------------------------:| 
+    Speed limit (80km/h)  1.000000e+00
+    Speed limit (120km/h)  2.081876e-21
+    Speed limit (30km/h)  1.425458e-21
+    Speed limit (20km/h)  2.856462e-22
+    Speed limit (50km/h)  1.257534e-23
+
                  
-                 
+ The model is not able to recognize the following sign for which it calculated the following top five soft max probabilities 
+                
   Speed limit (60km/h) 3
   
-        Prediction   Probability
-        No vehicles  9.999992e-01
-               Stop  8.475606e-07
-          Keep left  1.574779e-10
-    General caution  8.545054e-11
-         Keep right  2.466549e-11
+ |                Prediction | Probability
+ |:---------------------:|:---------------------------------------------:| 
+            Keep right  9.647627e-01
+                  Stop  3.523726e-02
+    Speed limit (70km/h)  8.246292e-09
+    Speed limit (20km/h)  1.866201e-09
+             Keep left  1.686841e-09
        
-  Speed limit (80km/h) 5
-  
-                              Prediction      Probability
-                          Traffic signals     0.977379
-                     Speed limit (60km/h)     0.012178
-                     Roundabout mandatory     0.010305
-    Right-of-way at the next intersection     0.000129
-                      Speed limit (80km/h)    0.000005
